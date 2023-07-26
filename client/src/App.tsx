@@ -14,6 +14,7 @@ function App() {
   const [progress, setProgress] = useState(0);
   const [story, setStory] = useState(null);
   const [status, setStatus] = useState('asking');
+  const [imageUrl, setImageUrl] = useState('');
 
   const nextQuestion = () => {
     if (currentIndex < questions.length - 1) {
@@ -31,7 +32,8 @@ function App() {
       })
       .then(response => response.json())
       .then(data => {        
-        setStory(data.content);
+        setStory(data.story);
+        setImageUrl(data.image_url);
         setStatus('story'); 
       })
       .catch((error) => {
@@ -49,30 +51,31 @@ function App() {
   }
 
   return (
-    <div className={`h-screen transition-colors duration-1000 ${currentTheme.background} flex items-center justify-center`}>
-      <div className="max-w-2xl mx-auto">
-        <ProgressBar progress={progress} height={10} color={'pink'} onLoaderFinished={() => setProgress(0)}/>
-        {status === 'asking' && ( 
-          <>
-            <Question text={questions[currentIndex].question} />
-            <div className="flex justify-center mt-8">
-              <Input
-                value={answers[currentIndex].answer}
-                onChange={handleChange}
-                onButtonClick={nextQuestion}
-                theme={currentTheme}
-              />
-            </div>
-          </>
-        )}
-        {status === 'loading' && 
-          <img src={loading} alt='loading' className="object-cover w-64 h-64 rounded-full" />
-        }
-        {status === 'story' && <Story text={story ? story : ''} />}
+    <>
+      <div className={`h-screen transition-colors duration-1000 ${currentTheme.background} flex items-center`}>
+        <div className="max-w-6xl mx-auto">
+          {status === 'asking' && ( 
+            <>
+              <ProgressBar progress={progress} height={10} color={'pink'} onLoaderFinished={() => setProgress(0)}/>
+              <Question text={questions[currentIndex].question} />
+              <div className="flex justify-center mt-8">
+                <Input
+                  value={answers[currentIndex].answer}
+                  onChange={handleChange}
+                  onButtonClick={nextQuestion}
+                  theme={currentTheme}
+                />
+              </div>
+            </>
+          )}
+          {status === 'loading' && 
+            <img src={loading} alt='loading' className="object-cover w-64 h-64 rounded-full" />
+          }
+          {status === 'story' && <Story story={story ? story : ''} image_url={imageUrl} />}
+        </div>
       </div>
-    </div>
-);
-
+    </>
+  );
 }
 
 export default App;
