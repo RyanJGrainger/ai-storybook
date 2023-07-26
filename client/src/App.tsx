@@ -5,6 +5,7 @@ import Story from './components/Story';
 import questions from './data/questions';
 import colorThemes from './data/themes';
 import ProgressBar from 'react-top-loading-bar';
+import loading from './assets/loading.gif';
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -29,7 +30,7 @@ function App() {
         body: JSON.stringify(answers),
       })
       .then(response => response.json())
-      .then(data => {
+      .then(data => {        
         setStory(data.content);
         setStatus('story'); 
       })
@@ -64,7 +65,9 @@ function App() {
             </div>
           </>
         )}
-        {status === 'loading' && <p>Loading</p>}
+        {status === 'loading' && 
+          <img src={loading} alt='loading' className="object-cover w-64 h-64 rounded-full" />
+        }
         {status === 'story' && <Story text={story ? story : ''} />}
       </div>
     </div>
