@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Fade up transition for the question text */
+.fade-up-enter {
+  opacity: 0.01;
+  transform: translateY(20px);
+}
+
+.fade-up-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 1.2s ease-out;
+}
+
+/* Fade transition for the background color */
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1.2s ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 1.2s ease-in;
+}
