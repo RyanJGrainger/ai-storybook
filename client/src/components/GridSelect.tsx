@@ -22,7 +22,7 @@ function GridSelect({options, cols, showLabel, onOptionClick}: {options: Option[
   return (
     <div className="">
       <div className="px-6 mx-auto lg:px-8">
-        <div className={`-mx-6 grid gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl ${columnClasses[cols]}`}>
+        <div className={`-mx-6 grid gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl ${columnClasses[cols as keyof typeof columnClasses]}`}>
           {options.map((option, index) => (
             <div 
               key={index} 

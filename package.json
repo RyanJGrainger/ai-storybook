@@ -4,7 +4,8 @@
     "scripts": {
         "dev": "concurrently --kill-others \"npm run server\" \"npm run client:dev\"",
         "server": "node server/index.js",
-        "client:dev": "npm run dev --prefix client"
+        "client:dev": "npm run dev --prefix client",
+        "postinstall": "npm run build --prefix client"
     },
     "dependencies": {
         "concurrently": "^8.2.0"
