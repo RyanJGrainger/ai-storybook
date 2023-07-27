@@ -25,7 +25,7 @@ function App() {
       setProgress(100);
       setStatus('loading'); 
       const answersToSend = answers.map(({ question, answer }) => ({ question, answer }));
-      fetch(`${import.meta.env.VITE_APP_API_URL}/api/story`, {
+      fetch(`/api/story`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
