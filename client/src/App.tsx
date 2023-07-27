@@ -23,7 +23,7 @@ function App() {
     } else if (currentIndex === questions.length - 1) {
       setProgress(100);
       setStatus('loading'); 
-      fetch('http://localhost:5001/api/story', {
+      fetch(`${import.meta.env.VITE_APP_API_URL}/api/story`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
