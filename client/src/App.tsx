@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Question from './components/Question';
 import Input from './components/Input';
 import Story from './components/Story';
+import GridSelect from './components/GridSelect';
 import questions from './data/questions';
 import colorThemes from './data/themes';
 import ProgressBar from 'react-top-loading-bar';
@@ -23,12 +24,13 @@ function App() {
     } else if (currentIndex === questions.length - 1) {
       setProgress(100);
       setStatus('loading'); 
+      const answersToSend = answers.map(({ question, answer }) => ({ question, answer }));
       fetch(`${import.meta.env.VITE_APP_API_URL}/api/story`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(answers),
+        body: JSON.stringify(answersToSend),
       })
       .then(response => response.json())
       .then(data => {        
@@ -50,6 +52,13 @@ function App() {
     });
   }
 
+  const handleOptionClick = (name: string) => {
+    handleChange(name);
+    setTimeout(() => {
+      nextQuestion();
+    } , 500);
+  };
+
   return (
     <>
       <div className={`h-screen transition-colors duration-1000 ${currentTheme.background} flex items-center`}>
@@ -59,12 +68,21 @@ function App() {
               <ProgressBar progress={progress} height={10} color={'pink'} onLoaderFinished={() => setProgress(0)}/>
               <Question text={questions[currentIndex].question} />
               <div className="flex justify-center mt-8">
-                <Input
-                  value={answers[currentIndex].answer}
-                  onChange={handleChange}
-                  onButtonClick={nextQuestion}
-                  theme={currentTheme}
-                />
+                {questions[currentIndex].gridSelect ? (
+                  <GridSelect
+                    options={questions[currentIndex].options || []}
+                    cols={questions[currentIndex].cols || 4}
+                    showLabel={questions[currentIndex].showLabel || false}
+                    onOptionClick={handleOptionClick}
+                  />
+                ) : (
+                  <Input
+                    value={answers[currentIndex].answer}
+                    onChange={handleChange}
+                    onButtonClick={nextQuestion}
+                    theme={currentTheme}
+                  />
+                )}
               </div>
             </>
           )}
