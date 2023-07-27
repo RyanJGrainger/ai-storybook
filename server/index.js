@@ -2,8 +2,29 @@ import express from 'express';
 import cors from 'cors';
 import { Configuration, OpenAIApi } from 'openai';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 dotenv.config({ path: './server/.env' });
+
+// Configuration for OpenAI
+const configuration = new Configuration({
+  organization: process.env.OPENAI_ORGANIZATION,
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
+// Express application setup
+const app = express();
+const port = process.env.PORT || 5001;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
@@ -11,21 +32,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
 });
 
-
-// OpenAI Configuration
-const configuration = new Configuration({
-  organization: process.env.OPENAI_ORGANIZATION,
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
-
-// Create express application
-const app = express();
-const port = process.env.PORT || 5001;
-
-// Middleware
-app.use(cors());
-app.use(express.json());
 
 // Function to interact with OpenAI API
 async function createStory(answers) {
