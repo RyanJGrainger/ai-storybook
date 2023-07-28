@@ -1,6 +1,12 @@
 const colorThemes = [
-  { background: "bg-blue-500", textColor: "text-blue-500", inputBackground: "bg-blue-200", iconColor: "text-blue-500", focusRing: "focus:ring-blue-200" },
+
+  { background: "bg-cyan-500", textColor: "text-cyan-500", inputBackground: "bg-cyan-200", iconColor: "text-cyan-500", focusRing: "focus:ring-cyan-200" },
   { background: "bg-cream", textColor: "text-orange-300", inputBackground: "bg-orange-100", iconColor: "text-orange-300", focusRing: "focus:ring-cream" },
+  { background: "bg-teal-500", textColor: "text-teal-500", inputBackground: "bg-teal-200", iconColor: "text-teal-500", focusRing: "focus:ring-teal-200" },
+  { background: "bg-orange-500", textColor: "text-orange-500", inputBackground: "bg-orange-200", iconColor: "text-orange-500", focusRing: "focus:ring-orange-200" },
+  // { background: "bg-lime-500", textColor: "text-lime-500", inputBackground: "bg-lime-200", iconColor: "text-lime-500", focusRing: "focus:ring-lime-200" },
+  // { background: "bg-amber-500", textColor: "text-amber-500", inputBackground: "bg-amber-200", iconColor: "text-amber-500", focusRing: "focus:ring-amber-200" },
+  { background: "bg-blue-500", textColor: "text-blue-500", inputBackground: "bg-blue-200", iconColor: "text-blue-500", focusRing: "focus:ring-blue-200" },
   { background: "bg-green-500", textColor: "text-green-500", inputBackground: "bg-green-200", iconColor: "text-green-500", focusRing: "focus:ring-green-200" },
   { background: "bg-red-500", textColor: "text-red-500", inputBackground: "bg-red-200", iconColor: "text-red-500", focusRing: "focus:ring-red-200" },
   { background: "bg-purple-500", textColor: "text-purple-500", inputBackground: "bg-purple-200", iconColor: "text-purple-500", focusRing: "focus:ring-purple-200" },

@@ -32,7 +32,7 @@ function GridSelect({options, cols, showLabel, onOptionClick}: {options: Option[
             >
               <span className="text-7xl">{option.emoji}</span>
               {showLabel && (
-                <span className="inline-flex items-center px-8 py-1 mt-2 text-lg font-light text-gray-100 rounded-md bg-gray-800/5 ring-1 ring-inset ring-gray-500/10">
+                <span className="items-center hidden px-8 py-1 mt-2 text-lg font-light text-gray-100 rounded-md sm:inline-flex bg-gray-800/5 ring-1 ring-inset ring-gray-500/10">
                     {option.name}
                 </span>
               )}

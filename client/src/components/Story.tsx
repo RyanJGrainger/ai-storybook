@@ -6,8 +6,8 @@ interface StoryProps {
 
 export default function Story({ story, image_url }: StoryProps) {
   return (
-    <section className="px-6 mt-64 overflow-hidden lg:mt-0 isolate lg:px-8">
-      <div className="relative max-w-2xl py-24 mx-auto sm:py-32 lg:max-w-4xl">
+    <section className="max-h-screen px-6 overflow-scroll mt-36 lg:mt-0 isolate lg:px-8">
+      <div className="relative max-w-2xl mx-auto lg:max-w-4xl">
         <figure className="grid items-center grid-cols-1 gap-x-6 gap-y-8 lg:gap-x-10">
           <div className="relative col-span-2 lg:col-start-1 lg:row-start-2">
             <svg

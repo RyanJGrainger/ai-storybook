@@ -113,7 +113,7 @@ function App() {
 
   return (
     <>
-      <div className={`h-screen transition-colors duration-1000 ${currentTheme.background} flex items-center`}>
+      <div className={`h-screen transition-colors duration-1000 ${currentTheme.background} sm:flex sm:items-center`}>
         <div className="max-w-6xl mx-auto">
           {renderContent()}
         </div>
