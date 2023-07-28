@@ -45,7 +45,7 @@ function App() {
       },
       body: JSON.stringify({
         answers: answersToSend,
-        image: true   
+        image: false   
       }),
     })
     .then(response => response.json())
