@@ -41,48 +41,34 @@ async function createStory(answers) {
       messages: [
         {
           "role": "system",
-          "content": "You will be provided with a list of questions and answers from a conversation with children. Your task is to generate a fun, creative and child-friendly story based on the answers provided. The story should be no more than 100 words."
+          "content": "You will be provided with a list of questions and answers from a conversation with children. Your task is to generate a fun, creative and child-friendly story based on the answers provided."
+        },
+        {
+          "role": "system",
+          "content": "Please begin by providing the title for the story. Denote the title in between # #."
+        },
+        {
+          "role": "system",
+          "content": "After the title, please provide a descriptive visual prompt for the story. Denote the visual prompt in between * *."
         },
         {
           "role": "user",
           "content": JSON.stringify(answers),
         },
       ],
-      temperature: 0.5,
-      max_tokens: 256,
+      temperature: 0.6,
+      max_tokens: 1024,
     });
   } catch (error) {
     throw new Error('Error making request to OpenAI API');
   }
 }
 
-async function createVisualPromptFromStory(story) {
-  try {
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          "role": "system",
-          "content": "You are a helpful assistant that translates stories into descriptive visual prompts for image generation. Please translate the following story into a visual prompt. Make sure the promt is succinct and descriptive, as it will be passed to an image generation model."
-        },
-        {
-          "role": "user",
-          "content": story,
-        },
-      ],
-      temperature: 0.5,
-      max_tokens: 256,
-    });
-    return response.data.choices[0].message.content;
-  } catch (error) {
-    throw new Error('Error making request to OpenAI API');
-  }
-}
 
 async function createImage(visualPrompt) {
   try {
     const response = await openai.createImage({
-      prompt: "a miyazaki style image with no text." +  visualPrompt,
+      prompt: "" +  visualPrompt,
       n: 1,
       size: "256x256",
     });
@@ -96,21 +82,34 @@ async function createImage(visualPrompt) {
 app.post('/api/story', async (req, res) => {
   try {
     const completion = await createStory(req.body.answers);
-    const story = completion.data.choices[0].message.content;
+    let story = completion.data.choices[0].message.content;
     let image_url = null; 
+    console.log(story);
+
+    // Extract title from the story
+    const titleMatch = story.match(/#(.*?)#/);
+    let title = titleMatch ? titleMatch[1] : 'Untitled';
     
     if (req.body.image) {
-      const visualPrompt = await createVisualPromptFromStory(story);
-      image_url = await createImage(visualPrompt);
+      const match = story.match(/\*(.*?)\*/);
+      if (match) {
+        const visualPrompt = match[1];
+        image_url = await createImage(visualPrompt);
+      }
     }
+
+    // Remove title and visual prompts from the story
+    story = story.replace(/#.*?#/, '').replace(/\*.*?\*/, '');
     
-    res.send({story: story, image_url: image_url});
+    res.send({title: title, story: story.trim(), image_url: image_url});
     console.log(completion);
   } catch (error) {
     console.log(error);
     res.status(500).send(error.message);
   }
 });
+
+
 
 // Server start
 app.listen(port, () => {

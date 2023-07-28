@@ -15,6 +15,7 @@ function App() {
   const [answers, setAnswers] = useState(questions);
   const [progress, setProgress] = useState(0);
   const [story, setStory] = useState(null);
+  const [title, setTitle] = useState('');
   const [status, setStatus] = useState('asking');
   const [imageUrl, setImageUrl] = useState('');
   const currentQuestion = questions[currentIndex];
@@ -29,6 +30,7 @@ function App() {
       const answersToSend = answers.map(({ question, answer }) => ({ question, answer }));
       fetchStory(answersToSend).then(data => {        
         setStory(data.story);
+        setTitle(data.title);
         setImageUrl(data.image_url);
         setStatus('story'); 
       });
@@ -69,42 +71,50 @@ function App() {
     switch (status) {
       case 'asking':
         return (
-          <div className='max-w-3xl'>
-            <ProgressBar progress={progress} height={10} color={'pink'} onLoaderFinished={() => setProgress(0)}/>
-            <Question text={ currentQuestion.question} />
-            <div className="flex justify-center mt-8">
-              { currentQuestion.gridSelect ? (
-                <motion.div 
-                  key={currentIndex} 
-                  initial={{ opacity: 0, y: 5 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  transition={{ duration: 0.5 }}
-                >
-                  <GridSelect
-                    options={ currentQuestion.options || []}
-                    cols={ currentQuestion.cols || 4}
-                    showLabel={ currentQuestion.showLabel || false}
-                    onOptionClick={handleOptionClick}
-                  />
-                </motion.div>
-              ) : (
-                <Input
-                  value={answers[currentIndex].answer}
-                  onChange={handleChange}
-                  onButtonClick={nextQuestion}
-                  theme={currentTheme}
-                />
-              )}
+          <div className={`h-screen transition-colors duration-1000 ${currentTheme.background} sm:flex sm:items-center`}>
+            <div className="max-w-6xl mx-auto">
+              <div className='max-w-3xl'>
+                <ProgressBar progress={progress} height={10} color={'pink'} onLoaderFinished={() => setProgress(0)}/>
+                <Question text={ currentQuestion.question} />
+                <div className="flex justify-center mt-8">
+                  { currentQuestion.gridSelect ? (
+                    <motion.div 
+                      key={currentIndex} 
+                      initial={{ opacity: 0, y: 5 }} 
+                      animate={{ opacity: 1, y: 0 }} 
+                      transition={{ duration: 0.5 }}
+                    >
+                      <GridSelect
+                        options={ currentQuestion.options || []}
+                        cols={ currentQuestion.cols || 4}
+                        showLabel={ currentQuestion.showLabel || false}
+                        onOptionClick={handleOptionClick}
+                      />
+                    </motion.div>
+                  ) : (
+                    <Input
+                      value={answers[currentIndex].answer}
+                      onChange={handleChange}
+                      onButtonClick={nextQuestion}
+                      theme={currentTheme}
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         );
       case 'loading':
         return (
-          <img src={loading} alt='loading' className="object-cover w-64 h-64 rounded-full" />
+          <div className={`h-screen transition-colors duration-1000 ${currentTheme.background} sm:flex sm:items-center`}>
+            <div className="max-w-6xl mx-auto">
+              <img src={loading} alt='loading' className="object-cover w-64 h-64 rounded-full" />
+            </div>
+          </div>
         );
       case 'story':
         return (
-          <Story story={story ? story : ''} image_url={imageUrl} />
+          <Story story={story ? story : ''} image_url={imageUrl} title={title ? title : ''} />
         );
       default:
         return null;
@@ -113,11 +123,7 @@ function App() {
 
   return (
     <>
-      <div className={`h-screen transition-colors duration-1000 ${currentTheme.background} sm:flex sm:items-center`}>
-        <div className="max-w-6xl mx-auto">
-          {renderContent()}
-        </div>
-      </div>
+      {renderContent()}
     </>
   );
 }
