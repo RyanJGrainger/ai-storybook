@@ -6,9 +6,9 @@ const colorThemes = [
   { background: "bg-purple-500", textColor: "text-purple-500", inputBackground: "bg-purple-200", iconColor: "text-purple-500", focusRing: "focus:ring-purple-200" },
   { background: "bg-pink-500", textColor: "text-pink-500", inputBackground: "bg-pink-200", iconColor: "text-pink-500", focusRing: "focus:ring-pink-200" },
   { background: "bg-indigo-500", textColor: "text-indigo-500", inputBackground: "bg-indigo-200", iconColor: "text-indigo-500", focusRing: "focus:ring-indigo-200" },
-  { background: "bg-yellow-500", textColor: "text-yellow-500", inputBackground: "bg-yellow-200", iconColor: "text-yellow-500", focusRing: "focus:ring-yellow-200" },
   { background: "bg-gray-500", textColor: "text-gray-500", inputBackground: "bg-gray-200", iconColor: "text-gray-500", focusRing: "focus:ring-gray-200" },
   { background: "bg-black", textColor: "text-white", inputBackground: "bg-gray-700", iconColor: "text-white", focusRing: "focus:ring-gray-700" },
+  { background: "bg-yellow-500", textColor: "text-yellow-500", inputBackground: "bg-yellow-200", iconColor: "text-yellow-500", focusRing: "focus:ring-yellow-200" },
 ];
 
 export default colorThemes;

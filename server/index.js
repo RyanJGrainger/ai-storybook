@@ -95,11 +95,15 @@ async function createImage(visualPrompt) {
 // Route handler
 app.post('/api/story', async (req, res) => {
   try {
-    const completion = await createStory(req.body);
+    const completion = await createStory(req.body.answers);
     const story = completion.data.choices[0].message.content;
-    const visualPrompt = await createVisualPromptFromStory(story);
-    console.log(visualPrompt);
-    const image_url = await createImage(visualPrompt);
+    let image_url = null; 
+    
+    if (req.body.image) {
+      const visualPrompt = await createVisualPromptFromStory(story);
+      image_url = await createImage(visualPrompt);
+    }
+    
     res.send({story: story, image_url: image_url});
     console.log(completion);
   } catch (error) {
