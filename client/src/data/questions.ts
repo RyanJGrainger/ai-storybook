@@ -14,7 +14,7 @@ const animals = [
   { emoji: '🐷', name: 'Pig' },
   { emoji: '🐸', name: 'Frog' },
   { emoji: '🐵', name: 'Monkey' },
-  { emoji: '🦉', name: 'Owl' },
+  { emoji: '🐙', name: 'Octopus' },
   { emoji: '🐧', name: 'Penguin' },
   { emoji: '🦄', name: 'Unicorn' },
 ];
